@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress2
+  labels:
+    app: vh02
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: vh02
+    tier: vh02
+  type: ClusterIP
+

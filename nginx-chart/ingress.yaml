@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  name: ingress-resource
+spec:
+  rules:
+  - host: vh01.kirill.k8s.local
+    http:
+      paths:
+      - backend:
+          serviceName: wordpress
+          servicePort: 80
+  - host: vh02.kirill.k8s.local
+    http:
+      paths:
+      - backend:
+          serviceName: wordpress2
+          servicePort: 80
+  - host: jenkins.kirill.k8s.local
+    http:
+      paths:
+      - backend:
+          serviceName: myjenkins
+          servicePort: 8080
+  - host: grafana.kirill.k8s.local
+    http:
+      paths:
+      - backend:
+          serviceName: grafana
+          servicePort: 80
+

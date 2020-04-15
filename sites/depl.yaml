@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpresstest
+  labels:
+    app: wordpresstest
+spec:
+  selector:
+    matchLabels:
+      app: wordpresstest
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: wordpresstest
+    spec:
+      automountServiceAccountToken: false
+      containers:
+      - image: wordpress:4-apache
+        name: wordpresstest
+        env:
+        - name: WORDPRESS_DB_HOST
+          value: mysql
+        - name: WORDPRESS_DB_USER
+          value: wordpress_user
+        - name: WORDPRESS_DB_NAME
+          value: vh01_wordpress_db
+        - name: WORDPRESS_DB_PASSWORD
+          value: PASSWORD
+        resources:
+          limits: { memory: "100Mi", cpu: "100m" }
+        ports:
+        - containerPort: 80
+          name: wordpresstest

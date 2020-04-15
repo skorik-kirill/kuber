@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress
+  labels:
+    app: vh01
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: vh01
+    tier: vh01 
+  type: NodePort
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: vh01
+  labels:
+    app: vh01
+spec:
+  selector: 
+    matchLabels:
+      app: vh01
+      tier: vh01
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: vh01
+        tier: vh01
+    spec:
+      containers:
+      - image: skorikkirill/virtualhost1:43
+        name: vh01
+        env:
+        - name: WORDPRESS_DB_HOST
+          value: wordpress-mysql
+        ports:
+        - containerPort: 80
+          name: vh01

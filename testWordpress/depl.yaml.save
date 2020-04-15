@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress
+  labels:
+    app: wordpress
+spec:
+  selector:
+    matchLabels:
+      app: wordpress
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: wordpress
+    spec:
+      automountServiceAccountToken: false
+      containers:
+      - image: wordpress:4-apache
+        name: wordpress
+        env:
+        - name: WORDPRESS_DB_HOST
+          value: mysql
+        - name: MYSQL_ROOT_PASSWORD
+          vlue: admin
+        - name: WORDPRESS_DB_USER
+       
+        resources:
+          limits: { memory: "100Mi", cpu: "100m" }
+        ports:
+        - containerPort: 80
+          name: wordpress

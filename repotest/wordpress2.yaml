@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: vh02
+  labels:
+    app: vh02
+spec:
+  selector:
+    matchLabels:
+      app: vh02
+      tier: vh02
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: vh02
+        tier: vh02
+    spec:
+      containers:
+      - image: skorikkirill/virtualhost2:20
+        name: vh02
+        env:
+        - name: WORDPRESS_DB_HOST
+          value: mysql
+        ports:
+        - containerPort: 80
+          name: vh02
+
